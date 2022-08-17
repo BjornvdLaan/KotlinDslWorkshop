@@ -2,6 +2,10 @@ package nl.bjornvanderlaan.example1.extensions
 
 import nl.bjornvanderlaan.example1.dsl.CurriculumVitaeBuilder
 
+/*
+This extension function shows something that does not work.
+ */
+
 class CertificationBuilder {
     var name = ""
     var issuer = ""
