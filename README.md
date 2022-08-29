@@ -1,1 +1,1 @@
-# Examples for Kotlin DSL's
+# Beginner workshop for Kotlin DSL's

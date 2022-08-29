@@ -1,6 +1,6 @@
-package nl.bjornvanderlaan.example1.extensions
+package nl.bjornvanderlaan.example1.extra
 
-import nl.bjornvanderlaan.example1.dsl.CurriculumVitaeBuilder
+import nl.bjornvanderlaan.example1.solution1.CurriculumVitaeBuilder
 
 /*
 This extension function shows something that does not work.

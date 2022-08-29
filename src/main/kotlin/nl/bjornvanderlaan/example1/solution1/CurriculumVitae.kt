@@ -1,9 +1,15 @@
-package nl.bjornvanderlaan.example1.dsl
+package nl.bjornvanderlaan.example1.solution1
 
 import java.time.LocalDate
 
 
-data class Role(val title: String, val company: String, val startDate: LocalDate, val endDate: LocalDate, val description: String)
+data class Role(
+    val title: String,
+    val company: String,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
+    val description: String
+)
 
 data class Section(val name: String, val entries: List<Role>)
 
