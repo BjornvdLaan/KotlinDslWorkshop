@@ -3,7 +3,7 @@ plugins {
     id 'java'
 }
 
-group 'nl.bjornvanderlaan'
+group 'nl.bjornvanderlaan.dslexamples'
 version '1.0-SNAPSHOT'
 
 repositories {
