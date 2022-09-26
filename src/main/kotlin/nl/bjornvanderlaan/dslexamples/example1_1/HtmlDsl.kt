@@ -35,6 +35,14 @@ class Head(private var value: String = ""): Element {
     operator fun String.unaryPlus() {
         value = this
     }
+
+    operator fun String.unaryMinus() {
+        value = this
+    }
+
+    operator fun String.not() {
+        value = this
+    }
 }
 
 fun html(init: HTML.() -> Unit): HTML {
@@ -62,8 +70,10 @@ class Body(private var elements: List<BodyElement> = listOf()): Element {
         return "<body>${elements.joinToString("")}</body>"
     }
 
+    // 1. Create an alias for this
     val a = this
 
+    // 2. Add infix function to use behind alias
     infix fun newElement(element: BodyElement): Body {
         this.elements += element
         return this
@@ -92,7 +102,17 @@ class Paragraph(private var value: String = ""): BodyElement {
 }
 
 @HtmlDsl
-class Img(private var src: String = "", private var alt: String = "", private var width: Int = 100, private var height: Int = 100): BodyElement {
+class Img(
+    private var src: String = "",
+    private var alt: String = "",
+    private var width: Int = 100,
+    private var height: Int = 100
+): BodyElement {
+    @Override
+    override fun toString(): String {
+        return "<img src=\"$src\" alt=\"$alt\" width=\"$width\" height=\"$height\" />"
+    }
+
     infix fun src(value: String): Img {
         this.src = value
         return this

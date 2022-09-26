@@ -1,10 +1,14 @@
 package nl.bjornvanderlaan.dslexamples.example1_1
 
 fun main() {
+
+
     val myHtml = html {
 
         head {
-            + "XML encoding in Kotlin"
+            + "My Kotlin Website"
+            - "My Kotlin Website"
+            ! "My Kotlin Website"
         }
 
         body {
