@@ -1,15 +1,33 @@
-package nl.bjornvanderlaan.dslexamples.example1
+package nl.bjornvanderlaan.dslexamples.example1_1
 
 interface Element
 interface BodyElement
 
-class HTML(var head: Head = Head(), var body: Body = Body()): Element {
+@DslMarker
+@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE)
+annotation class HtmlDsl
+
+@HtmlDsl
+class HTML(private var head: Head = Head(), private var body: Body = Body()): Element {
     override fun toString(): String {
         return "<html>$head$body</html>"
     }
+
+    fun head(init: Head.() -> Unit) {
+        val myHead = Head()
+        myHead.init()
+        this.head = myHead
+    }
+
+    fun body(init: Body.() -> Unit) {
+        val myBody = Body()
+        myBody.init()
+        this.body = myBody
+    }
 }
 
-class Head(var value: String = ""): Element {
+@HtmlDsl
+class Head(private var value: String = ""): Element {
     override fun toString(): String {
         return "<head>$value</head>"
     }
@@ -19,21 +37,36 @@ class Head(var value: String = ""): Element {
     }
 }
 
-class Div(var elements: List<BodyElement> = listOf()): BodyElement {
+fun html(init: HTML.() -> Unit): HTML {
+    val html = HTML()
+    html.init()
+    return html
+}
+
+@HtmlDsl
+class Div(var elements: MutableList<BodyElement> = mutableListOf()): BodyElement {
     override fun toString(): String {
         return "<div>${elements.joinToString("")}</div>"
     }
+
+    val a = this
+
+    infix fun newElement(element: BodyElement) {
+        elements.add(element)
+    }
 }
 
-class Body(var elements: List<BodyElement> = listOf()): Element {
+@HtmlDsl
+class Body(private var elements: List<BodyElement> = listOf()): Element {
     override fun toString(): String {
         return "<body>${elements.joinToString("")}</body>"
     }
 
     val a = this
 
-    infix fun newElement(element: BodyElement) {
+    infix fun newElement(element: BodyElement): Body {
         this.elements += element
+        return this
     }
 
     operator fun String.invoke(init: Div.() -> Unit) {
@@ -44,19 +77,50 @@ class Body(var elements: List<BodyElement> = listOf()): Element {
     }
 }
 
-class Header1(var value: String = ""): BodyElement {
+@HtmlDsl
+class Header1(private var value: String = ""): BodyElement {
     override fun toString(): String {
         return "<h1>$value</h1>"
     }
 }
 
-class Paragraph(var value: String = ""): BodyElement {
+@HtmlDsl
+class Paragraph(private var value: String = ""): BodyElement {
     override fun toString(): String {
         return "<p>$value</p>"
     }
 }
 
-class UnorderedList(var elements: MutableList<String> = mutableListOf()): BodyElement {
+@HtmlDsl
+class Img(private var src: String = "", private var alt: String = "", private var width: Int = 100, private var height: Int = 100): BodyElement {
+    infix fun src(value: String): Img {
+        this.src = value
+        return this
+    }
+
+    infix fun alt(value: String): Img {
+        this.alt = value
+        return this
+    }
+
+    infix fun width(value: Int): Img {
+        this.width = value
+        return this
+    }
+
+    infix fun height(value: Int): Img {
+        this.height = value
+        return this
+    }
+}
+
+val Body.img: Img
+    get() = Img().also {
+        this@img.newElement(it)
+    }
+
+@HtmlDsl
+class UnorderedList(private var elements: MutableList<String> = mutableListOf()): BodyElement {
     override fun toString(): String {
         return "<ul>${elements.joinToString("") { "<li>$it</li>" }}</ul>"
     }

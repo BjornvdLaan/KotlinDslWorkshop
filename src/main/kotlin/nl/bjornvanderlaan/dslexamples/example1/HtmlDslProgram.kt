@@ -1,12 +1,11 @@
 package nl.bjornvanderlaan.dslexamples.example1
 
-
 fun printHtmlStep(step: Int, html: HTML) {
     println("Step $step")
     println(html.toString())
 }
 
-fun main(args: Array<String>) {
+fun main() {
     var myHtml = HTML()
 
     //Version 0
@@ -164,7 +163,7 @@ fun main(args: Array<String>) {
                 a newElement Paragraph("My new section is beautiful")
             }
 
-            unorderedList("a")("b")("c")
+            unorderedList ("a")("b")("c")
         }
 
     }
