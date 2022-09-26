@@ -163,6 +163,8 @@ fun main(args: Array<String>) {
             "My new section" {
                 a newElement Paragraph("My new section is beautiful")
             }
+
+            unorderedList("a")("b")("c")
         }
 
     }

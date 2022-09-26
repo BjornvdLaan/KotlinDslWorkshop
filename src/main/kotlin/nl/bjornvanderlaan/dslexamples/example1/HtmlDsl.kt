@@ -42,6 +42,11 @@ class Body(var elements: List<BodyElement> = listOf()): Element {
         newDiv.init()
         this@Body.elements += newDiv
     }
+
+    val unorderedList: (String) -> (String) -> (String) -> Unit = UnorderedList().run {
+       this@Body.newElement(this)
+       this.unorderedList
+    }
 }
 
 class Header1(value: String = ""): BodyElement {
@@ -54,4 +59,24 @@ class Paragraph(value: String = ""): BodyElement {
     override fun toString(): String {
         return "<p>value</p>"
     }
+}
+
+class UnorderedList(var items: MutableList<String> = mutableListOf()): BodyElement {
+    override fun toString(): String {
+        return "<ul>${items.joinToString("") { "<li>$it</li>" }}</ul>"
+    }
+
+    fun interface TriStringConsumer {
+        fun accept(a: String, b: String, c: String)
+
+    }
+
+    private fun TriStringConsumer.curried() =
+        { p1: String -> { p2: String -> { p3: String -> this.accept(p1, p2, p3) } } }
+
+    private fun addItems(vararg newItems: String) {
+        items.addAll(newItems)
+    }
+
+    val unorderedList = TriStringConsumer { a, b, c -> addItems(a, b, c) }.curried()
 }
