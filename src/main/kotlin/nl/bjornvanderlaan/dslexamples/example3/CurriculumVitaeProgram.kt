@@ -49,7 +49,7 @@ fun main() {
             }
 
             "Software Engineer" {
-                role at "ING Bank" from "2019-04-01" to "2022-01-31"
+                role at "Xebia" from "2019-04-01" to "2022-01-31"
 
                 +"I have been working on various projects, ranging from small to large scale."
                 +"Continuously learning new technologies and technologies that are not yet in use."
